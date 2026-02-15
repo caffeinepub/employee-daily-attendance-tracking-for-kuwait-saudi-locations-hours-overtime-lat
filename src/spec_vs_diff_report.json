@@ -1,0 +1,64 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-15T14:34:44.584Z",
+  "summary": "Diff adds an employee designation field (implemented as a Motoko/TS enum with English labels) and updates the dashboard/attendance entry flow to pass a selected ISO date through React Query hooks and the entry dialog. However, backend date-based attendance APIs and the exact required data shape (designation as text) are not fully evidenced in the provided backend diff, and unrelated features (Monthly Report page/route, CSV export, global styling/theme updates) appear added without being requested.",
+  "missing_requirements": [
+    {
+      "id": "REQ-15",
+      "requirement": "Employee \"Designation\" field must be a new required text field in the backend Employee type and APIs, and persisted on create.",
+      "reason": "Backend implements Designation as a variant/enum type rather than a text field, which does not match the requirement/AC that explicitly call for a text field. Persistence on create is also not evidenced in the truncated backend diff.",
+      "evidence": [
+        "backend/main.mo",
+        "backend/migration.mo"
+      ]
+    },
+    {
+      "id": "REQ-16",
+      "requirement": "Backend support for upserting and fetching attendance by explicit selected date, with backward-compatible today-based behavior and authorization rules.",
+      "reason": "The diff summary shows frontend passing `isoDate` to mutations/queries, but the backend diff provided is truncated before showing any new/updated attendance APIs (upsert by (employeeId,date), fetch by (employeeId,date), wrappers for today, and admin-only write enforcement). Cannot confirm implementation from the provided backend evidence.",
+      "evidence": [
+        "backend/main.mo (truncated)",
+        "frontend/src/components/attendance/AttendanceEntryDialog.tsx",
+        "frontend/src/hooks/useQueries.ts (truncated)"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "Monthly Report page/route and related hooks/navigation.",
+      "reason": "Not requested in REQ-15/16/17/18; BuildRequest non-goals also indicate not implementing other sections unless required for date-based manual entry viewing.",
+      "evidence": [
+        "frontend-file-summaries.txt (mentions MonthlyReportPage, new monthly report route, navigation links)"
+      ]
+    },
+    {
+      "description": "CSV download/export utility and CSV export button in Monthly Report.",
+      "reason": "Not requested by any of REQ-15–REQ-18.",
+      "evidence": [
+        "frontend-file-summaries.txt (mentions utils/downloadCsv.ts and CSV export button)"
+      ]
+    },
+    {
+      "description": "Global design/theme changes (new OKLCH teal/cyan palette) and Tailwind theme extensions.",
+      "reason": "Not requested by any requirement; appears as unrelated styling work.",
+      "evidence": [
+        "frontend-file-summaries.txt (mentions frontend/src/index.css and frontend/tailwind.config.js changes)"
+      ]
+    }
+  ],
+  "confidence": 0.64,
+  "changed_files": [
+    "backend/main.mo",
+    "backend/migration.mo",
+    "frontend-file-summaries.txt",
+    "frontend/src/components/attendance/AttendanceEntryDialog.tsx",
+    "frontend/src/components/employees/EmployeeFormDialog.tsx",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/pages/DashboardPage.tsx",
+    "frontend/src/pages/EmployeeProfilePage.tsx",
+    "frontend/src/pages/EmployeesPage.tsx",
+    "frontend/src/utils/designation.ts",
+    "project_state.json"
+  ]
+}

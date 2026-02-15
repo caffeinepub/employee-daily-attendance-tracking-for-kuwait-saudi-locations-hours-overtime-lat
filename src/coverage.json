@@ -1,0 +1,93 @@
+{
+  "kind": "coverage_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-15T14:34:44.587Z",
+  "sources": {
+    "buildRequest": true,
+    "implementationPlan": true
+  },
+  "requirements": {
+    "total": 4,
+    "implemented": 3,
+    "items": [
+      {
+        "id": "REQ-15",
+        "summary": "Add an employee \"Designation\" field to the data model and APIs, and ensure it is required when creating a new employee.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/employees/EmployeeFormDialog.tsx",
+          "frontend/src/hooks/useQueries.ts",
+          "frontend/src/pages/EmployeesPage.tsx",
+          "frontend/src/pages/EmployeeProfilePage.tsx",
+          "frontend/src/utils/designation.ts"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/employees/EmployeeFormDialog.tsx",
+          "frontend/src/hooks/useQueries.ts",
+          "frontend/src/pages/EmployeesPage.tsx",
+          "frontend/src/pages/EmployeeProfilePage.tsx",
+          "frontend/src/utils/designation.ts"
+        ]
+      },
+      {
+        "id": "REQ-16",
+        "summary": "Implement backend support for recording and retrieving attendance by an explicit selected date (not only \"today\"), so admins can manually enter daily staff attendance data for any day.",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-17",
+        "summary": "Update the Daily Attendance UI to allow selecting a date and to manually enter attendance for that selected date (not only today).",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/DashboardPage.tsx",
+          "frontend/src/components/attendance/AttendanceEntryDialog.tsx",
+          "frontend/src/utils/formatDate.ts",
+          "frontend/src/backend.d.ts"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/DashboardPage.tsx",
+          "frontend/src/components/attendance/AttendanceEntryDialog.tsx",
+          "frontend/src/backend.d.ts"
+        ]
+      },
+      {
+        "id": "REQ-18",
+        "summary": "Update React Query hooks and cache keys so attendance queries/mutations are date-aware and correctly invalidate/refetch when the selected date changes or when an entry is saved.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/hooks/useQueries.ts",
+          "frontend/src/pages/DashboardPage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/hooks/useQueries.ts",
+          "frontend/src/pages/DashboardPage.tsx"
+        ]
+      }
+    ]
+  },
+  "changedFiles": [
+    "backend/main.mo",
+    "backend/migration.mo",
+    "build-request.json",
+    "feature_evidence.json",
+    "frontend-file-summaries.txt",
+    "frontend-implementation-plan.json",
+    "frontend/src/backend.d.ts",
+    "frontend/src/backend.ts",
+    "frontend/src/components/attendance/AttendanceEntryDialog.tsx",
+    "frontend/src/components/employees/EmployeeFormDialog.tsx",
+    "frontend/src/declarations/backend.did.d.ts",
+    "frontend/src/declarations/backend.did.js",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/pages/DashboardPage.tsx",
+    "frontend/src/pages/EmployeeProfilePage.tsx",
+    "frontend/src/pages/EmployeesPage.tsx",
+    "frontend/src/utils/designation.ts",
+    "project_state.json",
+    "scratch/component-selection.json",
+    "spec.md",
+    "spec_vs_diff_report.json"
+  ]
+}

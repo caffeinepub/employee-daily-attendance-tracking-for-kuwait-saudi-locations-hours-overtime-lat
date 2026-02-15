@@ -1,0 +1,94 @@
+{
+  "kind": "build_request",
+  "title": "Add employee designation field and enable manual attendance entry for any selected date",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-15",
+      "text": "Add an employee \"Designation\" field to the data model and APIs, and ensure it is required when creating a new employee.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-3"
+        ],
+        "quotes": [
+          "I need add employee details name & id & designation."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend Employee type includes a new text field for designation.",
+        "The backend add-employee API persists the designation value for each employee.",
+        "If designation is missing/blank on create, the frontend shows a clear English validation error and does not submit.",
+        "Frontend \"Add New Employee\" form includes a Designation input field and submits it successfully.",
+        "Employee list cards and the Employee Profile page display the employee’s designation in English labels."
+      ]
+    },
+    {
+      "id": "REQ-16",
+      "text": "Implement backend support for recording and retrieving attendance by an explicit selected date (not only \"today\"), so admins can manually enter daily staff attendance data for any day.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-3"
+        ],
+        "quotes": [
+          "I need manually enter daily staff attendance data"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend provides an API to upsert (create or update) an attendance record for (employeeId, date) with working status and optional check-in/check-out times.",
+        "Backend provides an API to fetch an employee’s working status (and/or attendance record) for a given (employeeId, date).",
+        "Existing \"today\"-based behavior continues to work by calling the new date-based logic with the selected date = today, or via backward-compatible wrappers.",
+        "Authorization is enforced: only admins can create/update attendance; any authenticated user can view attendance status/record for a date."
+      ]
+    },
+    {
+      "id": "REQ-17",
+      "text": "Update the Daily Attendance UI to allow selecting a date and to manually enter attendance for that selected date (not only today).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-3"
+        ],
+        "quotes": [
+          "daily attendance entry manually option not available. I need manually enter daily staff attendance data"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Daily Attendance page includes a date selector (defaulting to today) and the header date display updates accordingly (still using the existing DD-MM-YYYY Mon formatting).",
+        "For each employee row, the displayed status is fetched for the currently selected date (not always today).",
+        "The admin \"Entry\" action opens the attendance entry dialog and saves attendance against the currently selected date.",
+        "After saving an entry, the UI refreshes and shows the updated status for that employee on the selected date."
+      ]
+    },
+    {
+      "id": "REQ-18",
+      "text": "Update React Query hooks and cache keys so attendance queries/mutations are date-aware and correctly invalidate/refetch when the selected date changes or when an entry is saved.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-3"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Attendance query keys include the selected date (e.g., working status for employeeId + date), preventing cross-date cache contamination.",
+        "Attendance mutations invalidate the correct date-scoped queries so the dashboard updates immediately after saving.",
+        "No user-facing errors mention internal types (e.g., BigInt) and all error messages remain in English."
+      ]
+    }
+  ],
+  "constraints": [
+    "Backend must remain a single Motoko actor with all logic in backend/main.mo; add backend/migration.mo only if an upgrade requires state migration under the project’s migration policy.",
+    "Do not edit any files under frontend/src/components/ui or any frontend paths listed as immutable in SYSTEM_CONTEXT.",
+    "Use English for all user-facing text (labels, buttons, validation errors, toasts)."
+  ],
+  "nonGoals": [
+    "Do not add third-party authentication providers (only Internet Identity).",
+    "Do not add real-time/WebSocket updates for attendance changes.",
+    "Do not implement the previously-placeholder \"Attendance History\" section unless required to satisfy date-based manual entry viewing on the dashboard."
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}

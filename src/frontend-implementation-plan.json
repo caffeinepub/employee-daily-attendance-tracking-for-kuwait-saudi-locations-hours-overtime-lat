@@ -1,0 +1,98 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Designation field in employee UI + date-aware manual attendance entry",
+  "requirements": [
+    {
+      "id": "REQ-15",
+      "summary": "Add required Designation field to Add Employee flow and display designation on employee list cards and profile.",
+      "acceptanceCriteria": [
+        "Backend Employee type includes a new text field for designation.",
+        "The backend add-employee API persists the designation value for each employee.",
+        "If designation is missing/blank on create, the frontend shows a clear English validation error and does not submit.",
+        "Frontend \"Add New Employee\" form includes a Designation input field and submits it successfully.",
+        "Employee list cards and the Employee Profile page display the employee’s designation in English labels."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/employees/EmployeeFormDialog.tsx",
+          "operation": "modify",
+          "description": "Add a required \"Designation\" field to the Add New Employee form (use a Select driven by the Designation enum), validate it (clear English error, no submit when missing), and include designation in the mutation payload. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useQueries.ts",
+          "operation": "modify",
+          "description": "Update useAddEmployee to accept designation and call the backend addEmployee with the correct argument order/signature; ensure errors remain English and user-friendly. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/EmployeesPage.tsx",
+          "operation": "modify",
+          "description": "Display each employee’s designation on employee cards with an English label (e.g., \"Designation: …\") using a shared designation-to-label formatter. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/EmployeeProfilePage.tsx",
+          "operation": "modify",
+          "description": "Show the employee’s designation in the Employee Information section with an English label, using the shared designation-to-label formatter. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/utils/designation.ts",
+          "operation": "create",
+          "description": "Add a small utility to map Designation enum values to clear English labels (and optionally a safe fallback for unknown values) for reuse across list/profile/form UI. Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-17",
+      "summary": "Make Daily Attendance page date-selectable and ensure entry dialog saves/refreshes attendance for the selected date.",
+      "acceptanceCriteria": [
+        "Daily Attendance page includes a date selector (defaulting to today) and the header date display updates accordingly (still using the existing DD-MM-YYYY Mon formatting).",
+        "For each employee row, the displayed status is fetched for the currently selected date (not always today).",
+        "The admin \"Entry\" action opens the attendance entry dialog and saves attendance against the currently selected date.",
+        "After saving an entry, the UI refreshes and shows the updated status for that employee on the selected date."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/DashboardPage.tsx",
+          "operation": "modify",
+          "description": "Add a date selector (type=\"date\") defaulting to today; drive header date display via formatDashboardDate(selectedDate). Pass selectedDate into each employee row query and into the admin Entry dialog so reads/writes are for the currently selected date. Keep admin-only visibility for Entry using the existing admin check (authorization component-backed). Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/attendance/AttendanceEntryDialog.tsx",
+          "operation": "modify",
+          "description": "Accept selectedDate as a prop, display it in the dialog (English), and create check-in/check-out timestamps using the selected date (not always today). Replace today-only save behavior with a single date-aware save path (upsert attendance for employeeId+date with status and optional times), then close/reset and rely on date-scoped invalidation to refresh the selected date’s status. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/utils/formatDate.ts",
+          "operation": "modify",
+          "description": "Ensure date formatting remains stable for DD-MM-YYYY Mon and works for the selected ISO date string used by the new date selector (no locale surprises). Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/backend.d.ts",
+          "operation": "modify",
+          "description": "Update frontend backend interface typings to include the new date-aware attendance functions required by the updated UI (date parameter and upsert/fetch by employeeId+date), keeping existing today-based signatures if still present for backward compatibility during transition. Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-18",
+      "summary": "Make attendance React Query hooks date-aware with correct cache keys and invalidation on date changes/saves.",
+      "acceptanceCriteria": [
+        "Attendance query keys include the selected date (e.g., working status for employeeId + date), preventing cross-date cache contamination.",
+        "Attendance mutations invalidate the correct date-scoped queries so the dashboard updates immediately after saving.",
+        "No user-facing errors mention internal types (e.g., BigInt) and all error messages remain in English."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useQueries.ts",
+          "operation": "modify",
+          "description": "Refactor attendance hooks to be date-aware: (1) change working status query to accept (employeeId, isoDate) and use queryKey like ['workingStatus', employeeId, isoDate]; (2) add/replace a date-aware attendance upsert mutation and invalidate only the relevant date-scoped keys (plus any needed list keys) on success; (3) keep all thrown messages/toasts in English and sanitize any low-level errors (e.g., BigInt/time parsing) before surfacing. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/DashboardPage.tsx",
+          "operation": "modify",
+          "description": "Wire the selectedDate state into the date-aware query hooks so changing the selected date naturally triggers refetch via new cache keys (no cross-date contamination). Verify the component's usage instructions before implementing."
+        }
+      ]
+    }
+  ]
+}

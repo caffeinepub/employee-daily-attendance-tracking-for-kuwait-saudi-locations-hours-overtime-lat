@@ -1,0 +1,250 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 11,
+  "summary": "Employee attendance tracking app for teams across Kuwait and Saudi projects, with daily presence, hours, overtime, lateness, permissions, absences, employee ID photo reference, plus Excel export, monthly hour calculations (week off Fridays), and different rules for company vs supplier employees.",
+  "architectural_notes": [
+    "UI date formatting requirement: display dates as DD-MM-YYYY and show short weekday form (e.g., Mon).",
+    "Reporting rules: treat Fridays as weekly off when computing monthly expected working days/hours; compute absent hours as absentDays * dailyHours; separate normal vs overtime totals for company employees; supplier employees aggregate all hours together."
+  ],
+  "known_issues": [
+    "App currently lacks an 'Add employee details' flow (name, ID, designation).",
+    "Manual daily attendance entry option is not available; user cannot manually enter daily staff attendance data."
+  ],
+  "isFixRequest": true,
+  "existing_features": [
+    {
+      "id": "feature-implement-internet-identity-sign-in-and-basic-authorization-so-only-authenticated-users-can-access-the-app-add-a-simple-admin-manager-capability-to-create-and-manage-employee-records",
+      "title": "Implement Internet Identity sign-in and basic authorization so only authenticated users can access the app; add a simple admin/manager capability to create and manage employee records.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-backend-data-models-and-apis-to-manage-employees-including-employee-name-employee-number-id-assigned-location-kuwait-or-saudi-and-or-project-name-and-an-employee-id-photo-stored-as-an-image-blob-with-basic-size-type-validation",
+      "title": "Create backend data models and APIs to manage employees, including: employee name, employee number/ID, assigned location (Kuwait or Saudi) and/or project name, and an employee ID photo stored as an image blob with basic size/type validation.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-a-daily-attendance-dashboard-screen-for-a-selected-date-default-today-showing-total-present-count-total-absent-count-total-permission-count-total-late-count-and-a-list-table-of-employees-with-their-status-working-hours-overtime-status-and-location-project-filter-kuwait-saudi-projects",
+      "title": "Build a Daily Attendance dashboard screen for a selected date (default: today) showing: total present count, total absent count, total permission count, total late count, and a list/table of employees with their status, working hours, overtime status, and location/project filter (Kuwait/Saudi/projects).",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-attendance-entry-edit-workflow-to-record-daily-status-for-each-employee-present-with-check-in-out-absent-with-details-permission-with-details-late-flag-with-validation-and-clear-error-messages-in-english",
+      "title": "Add an Attendance entry/edit workflow to record daily status for each employee (present with check-in/out, absent with details, permission with details, late flag), with validation and clear error messages in English.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-show-employee-id-photos-alongside-the-list-of-present-employees-and-optionally-all-employees-so-managers-can-visually-verify-identity-include-a-dedicated-employee-profile-view-that-displays-the-stored-id-photo-and-core-employee-fields",
+      "title": "Show employee ID photos alongside the list of present employees (and optionally all employees) so managers can visually verify identity; include a dedicated employee profile view that displays the stored ID photo and core employee fields.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-overtime-tracking-such-that-the-system-can-identify-and-list-employees-working-overtime-for-a-selected-date-including-overtime-hours-provide-a-configurable-overtime-threshold-default-value-visible-in-ui-used-to-compute-overtime-from-working-hours",
+      "title": "Implement overtime tracking such that the system can identify and list employees working overtime for a selected date, including overtime hours; provide a configurable overtime threshold (default value visible in UI) used to compute overtime from working hours.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-support-multi-location-reporting-by-ensuring-employees-and-attendance-records-are-associated-with-kuwait-or-saudi-and-optionally-a-free-text-project-and-allow-dashboard-filtering-and-counts-by-location",
+      "title": "Support multi-location reporting by ensuring employees and attendance records are associated with Kuwait or Saudi (and optionally a free-text project), and allow dashboard filtering and counts by location.",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-coherent-visual-theme-and-layout-for-a-business-admin-dashboard-typography-spacing-colors-components-applied-consistently-across-all-screens-avoiding-blue-purple-as-the-primary-palette",
+      "title": "Add a coherent visual theme and layout for a business admin dashboard (typography, spacing, colors, components) applied consistently across all screens, avoiding blue/purple as the primary palette.",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-on-the-daily-attendance-dashboard-header-change-the-displayed-selected-date-currently-rendered-in-the-span-at-xpath-html-1-body-1-div-1-div-1-main-1-div-1-div-1-div-2-span-1-from-the-iso-format-yyyy-mm-dd-to-the-format-dd-mm-yyyy-mon-2-digit-day-2-digit-month-4-digit-year-and-3-letter-english-weekday-abbreviation",
+      "title": "On the Daily Attendance dashboard header, change the displayed selected date (currently rendered in the span at XPath /html[1]/body[1]/div[1]/div[1]/main[1]/div[1]/div[1]/div[2]/span[1]) from the ISO format (YYYY-MM-DD) to the format \"DD-MM-YYYY Mon\" (2-digit day, 2-digit month, 4-digit year, and 3-letter English weekday abbreviation).",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-support-for-two-employee-types-company-and-supplier-across-the-app-including-storing-the-type-on-each-employee-record-and-showing-it-in-employee-views",
+      "title": "Add support for two employee types (Company and Supplier) across the app, including storing the type on each employee record and showing it in employee views.",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-export-feature-that-allows-managers-admins-to-download-all-relevant-data-in-an-excel-compatible-format-csv-download-including-employees-and-attendance-data-and-include-monthly-summary-exports-using-the-same-rules-as-the-monthly-calculations",
+      "title": "Add an export feature that allows managers/admins to download all relevant data in an Excel-compatible format (CSV download), including employees and attendance data, and include monthly summary exports using the same rules as the monthly calculations.",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-monthly-report-screen-in-the-ui-that-lets-the-user-select-a-month-year-and-view-per-employee-monthly-totals-expected-days-hours-absent-days-hours-worked-totals-and-company-normal-vs-overtime-split-vs-supplier-combined-with-an-export-button-for-that-month",
+      "title": "Add a Monthly Report screen in the UI that lets the user select a month/year and view per-employee monthly totals (expected days/hours, absent days/hours, worked totals, and company normal vs overtime split vs supplier combined), with an Export button for that month.",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-employee-designation-field-to-the-data-model-and-apis-and-ensure-it-is-required-when-creating-a-new-employee",
+      "title": "Add an employee \"Designation\" field to the data model and APIs, and ensure it is required when creating a new employee.",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-daily-attendance-ui-to-allow-selecting-a-date-and-to-manually-enter-attendance-for-that-selected-date-not-only-today",
+      "title": "Update the Daily Attendance UI to allow selecting a date and to manually enter attendance for that selected date (not only today).",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-react-query-hooks-and-cache-keys-so-attendance-queries-mutations-are-date-aware-and-correctly-invalidate-refetch-when-the-selected-date-changes-or-when-an-entry-is-saved",
+      "title": "Update React Query hooks and cache keys so attendance queries/mutations are date-aware and correctly invalidate/refetch when the selected date changes or when an entry is saved.",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Daily attendance dashboard (who came today / present count)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Track working hours per employee per day",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Overtime tracking and list of employees working overtime",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Store/display employee ID photo for present employees as reference",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Permission/leave requests tracking (employees who took permission)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Late arrival tracking (who came late)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Absence tracking and absence details",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Support multiple office/project locations (Kuwait and Saudi) for attendance reporting",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-11",
+      "summary": "Create backend data models and APIs for daily attendance records per employee, supporting: date, location/project, check-in time, check-out time, computed working hours, overtime flag/hours, late flag, permission flag/details, and absence status/details.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-12",
+      "summary": "Add termination list/status for employees with long absence (mark terminated after extended absence and track in a separate list)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-13",
+      "summary": "Export all attendance/employee data to Excel format (downloadable report)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-14",
+      "summary": "Monthly attendance summary calculations: expected working days/hours (excluding Fridays week-off), absent hours deduction, and separate normal vs overtime hours totals",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-15",
+      "summary": "Support employee types (Company vs Supplier) with different hour counting: supplier employees count all hours together (no separate normal/overtime breakdown)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-17",
+      "summary": "Implement monthly attendance/hour summary calculations using the business rules provided: expected working days exclude Fridays as week-off; expected hours are (expected working days × standard daily hours, default 8); absences reduce working balance by (absent days × standard daily hours); Company employees must have normal working hours and overtime hours tracked separately; Supplier employees must have all hours counted together (no normal vs overtime split).",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-18",
+      "summary": "Add employee details management UI/fields: name, employee ID, and designation (create/edit employee records)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-19",
+      "summary": "Provide a manual daily attendance entry option so managers can enter staff attendance data (create/edit attendance records)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-21",
+      "summary": "Implement backend support for recording and retrieving attendance by an explicit selected date (not only \"today\"), so admins can manually enter daily staff attendance data for any day.",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Employee daily attendance tracking for Kuwait & Saudi locations (hours, overtime, late, permissions, absences, ID photo)",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

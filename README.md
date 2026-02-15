@@ -1,2 +1,3 @@
-# employee-daily-attendance-tracking-for-kuwait-saudi-locations-hours-overtime-lat
-Exported from Caffeine project: Employee daily attendance tracking for Kuwait &amp; Saudi locations (hours, overtime, late, permissions, absences, ID photo)
+## 
+
+To run app build and run docker image: `docker build -t app . docker run -it --network host app`
